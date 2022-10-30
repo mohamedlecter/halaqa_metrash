@@ -1,0 +1,18 @@
+
+.addTask{
+  display: flex;
+  justify-content: start;
+  margin-left: 100px;
+  padding: 10px;
+}
+
+.tableContainer {
+padding: 50px;
+}
+
+thead {
+  background-color: black;
+}
+thead th {
+  color: white;
+}

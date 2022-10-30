@@ -1,0 +1,28 @@
+.container{
+/* background-color: red; */
+
+}
+.cards{
+  display: flex;
+  margin-top: -100px;
+/* background-color: blue; */
+}
+.title {
+  padding: 15px;
+  margin-left: 35px;
+} h2{
+  font-size: 28px;
+  font-weight: 600;
+  color: rgb(34, 34, 34);
+}
+.anchorTag {
+    text-decoration: none;
+    color: black;
+  
+}
+.loginas{
+  padding-top: 30px;
+
+  /* margin-top: 35px; */
+/* background-color: yellow; */
+}
