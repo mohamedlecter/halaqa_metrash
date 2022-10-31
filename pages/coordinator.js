@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/header";
-import Table from "../components/taskTable";
-import Task from "../components/Task";
+import Form from "../components/Form";
+import TaskTable from "../components/taskTable";
+// import Task from "../components/Task";
 
 export default function admin() {
+  const [visable, setVisable] = useState(false);
+  const handler = () => {
+    setVisable(!visable);
+  };
   return (
     <div>
       <Header />
-      <Task />
+      <div className="taskContainer">
+        <div className="addTask">
+          <button onClick={handler} type="submit" className="btn btn-primary">
+            Add task
+          </button>
+        </div>
+        {visable ? <Form /> : <></>}
+        <TaskTable />
+      </div>
     </div>
   );
 }

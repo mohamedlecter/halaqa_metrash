@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
 import Header from "../components/header";
 
 export default function Home() {
