@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
 import Header from "../components/header";
 
 export default function Home() {
@@ -17,7 +16,7 @@ export default function Home() {
               <form className="Auth-form">
                 <div className="Auth-form-content">
                   <Link href="/coordinator" className="anchorTag">
-                    <h3 className="Auth-form-title">Admin</h3>
+                    <h3 className="Auth-form-title">Coordinator </h3>
                   </Link>
                 </div>
               </form>
@@ -25,7 +24,7 @@ export default function Home() {
             <div className="Auth-form-container">
               <form className="Auth-form">
                 <div className="Auth-form-content">
-                  <Link href="/teacherLogin" className="anchorTag">
+                  <Link href="/teacher" className="anchorTag">
                     <h3 className="Auth-form-title">Teacher</h3>
                   </Link>
                 </div>
