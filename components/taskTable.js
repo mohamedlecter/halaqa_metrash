@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { BiEdit, BiTrashAlt } from "react-icons/bi";
-import { deleteTask, getStudents } from "../lib/helper";
+import { deleteTask, getStudents, getTask } from "../lib/helper";
 import { useQuery } from "react-query";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleChangeAction } from "../redux/reducer";
+import Router from "next/router";
+import { useRouter } from "next/router";
 export default function TaskTable() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  // const state = useSelector((state) => state.app.client.toggleForm);
-  // console.log(state);
 
   useEffect(() => {
     const getData = async () => {
@@ -69,7 +69,7 @@ function Tr({
 }) {
   const visable = useSelector((state) => state.app.client.toggleForm);
   const dispatch = useDispatch();
-
+  const router = useRouter();
   const onUpdate = () => {
     dispatch(toggleChangeAction());
     console.log(visable);
@@ -78,24 +78,10 @@ function Tr({
   const onDelete = () => {
     console.log(_id);
     deleteTask(_id);
-    // export async function deleteTask(taskId) {
-    //   try {
-    //     const Options = {
-    //       method: "DELETE",
-    //       headers: { "content-type": "application/json" },
-    //     };
-    //     const res = await fetch(
-    //       `http://localhost:3000/api/tasks/${taskId}`,
-    //       Options
-    //     );
-    //     const json = await res.json;
-    //     return json;
-    //   } catch (error) {
-    //     return error;
-    //   }
+    setTimeout(() => {
+      router.reload();
+    }, 0.5 * 1000);
   };
-
-  // };
 
   return (
     <tr>

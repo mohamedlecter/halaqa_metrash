@@ -3,26 +3,11 @@ import Table from "react-bootstrap/Table";
 import { BiEdit, BiTrashAlt } from "react-icons/bi";
 import { deleteStudent, getStudents } from "../lib/helper";
 import { useQuery } from "react-query";
+import { useRouter } from "next/router";
 export default function StudentTable() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  // useEffect(() => {
-  //   fetch("http://localhost:3000/api/students")
-  //     .then((results) => {
-  //       const res = results.json();
-  //       console.log(res);
-  //     })
-  //     .then((studentsList) => setStudentsList(studentsList))
-  //     .catch((error) => {});
-  // }, []);
-  // console.log(studentsList);
-
-  // useEffect(() => {
-  //   fetch(`http://localhost:3000/api/students`).then((response) =>
-  //     console.log(response)
-  //   );
-  // }, []);
 
   useEffect(() => {
     const getData = async () => {
@@ -46,23 +31,6 @@ export default function StudentTable() {
     getData();
   }, []);
 
-  // return (
-  //   <div className="App">
-  //     <h1>API Posts</h1>
-  //     {loading && <div>A moment please...</div>}
-  //     {error && (
-  //       <div>{`There is a problem fetching the post data - ${error}`}</div>
-  //     )}
-  //     <ul>
-  //       {data &&
-  //         data.students.map(({ id, email }) => (
-  //           <li key={id}>
-  //             <h3>{email}</h3>
-  //           </li>
-  //         ))}
-  //     </ul>
-  //   </div>
-  // );
   return (
     <div className="tableContainer">
       <Table className="table">
@@ -97,9 +65,13 @@ function Tr({
   password,
   status,
 }) {
+  const router = useRouter();
   const onDelete = () => {
     console.log(_id);
     deleteStudent(_id);
+    setTimeout(() => {
+      router.reload();
+    }, 0.5 * 1000);
   };
   return (
     <tr>
