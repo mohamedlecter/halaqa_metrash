@@ -3,13 +3,30 @@ import Header from "../components/header";
 import StudentTable from "../components/StudentsTable";
 import AddStudent from "../components/AddStudent";
 import UpdateStudent from "../components/UpdateStudent";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleChangeAction } from "../redux/reducer";
+import { useReducer } from "react";
+
+const fromReducer = (state, event) => {
+  return {
+    ...state,
+    [event.target.name]: event.target.value,
+  };
+};
 
 export default function admin() {
-  const [visable, setVisable] = useState(false);
+  const [formData, setFormDate] = useReducer(fromReducer, {});
+
+  const visable = useSelector((state) => state.app.client.toggleForm);
+  const update = useSelector((state) => state.app.update.toggleForm);
+  const formId = useSelector((state) => state.app.update.formId);
+
+  const dispatch = useDispatch();
+
   const handler = () => {
-    setVisable(!visable);
+    dispatch(toggleChangeAction());
   };
-  const Add = true;
+  console.log(visable);
 
   return (
     <div>
@@ -20,7 +37,9 @@ export default function admin() {
             Add Students
           </button>
         </div>
-        {visable ? Add ? <AddStudent /> : <UpdateStudent /> : <></>}
+        {visable ? AddStudent({ formId, formData, setFormDate }) : <></>}
+        {update ? UpdateStudent({ formId, formData, setFormDate }) : <></>}
+        {/* {visable ? <AddStudent /> : <UpdateStudent />} */}
         <StudentTable />
       </div>
     </div>

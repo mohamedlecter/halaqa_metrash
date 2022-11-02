@@ -3,7 +3,7 @@ import { useReducer } from "react";
 import Success from "./success";
 import { BiPlus } from "react-icons/bi";
 
-const fromReducer = (state, event) => {
+const formReducer = (state, event) => {
   return {
     ...state,
     [event.target.name]: event.target.value,
@@ -11,7 +11,7 @@ const fromReducer = (state, event) => {
 };
 
 export default function UpdateStudent() {
-  const [formData, setFormDate] = useReducer(fromReducer, {});
+  const [formData, setFormDate] = useReducer(formReducer, {});
   const handleSubmit = (e) => {
     e.preventDefault();
     if (Object.keys(formData).length == 0) {

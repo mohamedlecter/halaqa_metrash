@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { BiEdit, BiTrashAlt } from "react-icons/bi";
-import { getStudents } from "../lib/helper";
+import { deleteStudent, getStudents } from "../lib/helper";
 import { useQuery } from "react-query";
 export default function StudentTable() {
   const [data, setData] = useState(null);
@@ -87,6 +87,7 @@ export default function StudentTable() {
 }
 
 function Tr({
+  _id,
   qatariId,
   firstName,
   lastName,
@@ -96,6 +97,10 @@ function Tr({
   password,
   status,
 }) {
+  const onDelete = () => {
+    console.log(_id);
+    deleteStudent(_id);
+  };
   return (
     <tr>
       <td>
@@ -127,7 +132,11 @@ function Tr({
           <BiEdit size={25} color={"rgba(34,197,94)"}></BiEdit>
         </button>
         <button className="tableBtn">
-          <BiTrashAlt size={25} color={"rgba(244,63,94)"}></BiTrashAlt>
+          <BiTrashAlt
+            size={25}
+            color={"rgba(244,63,94)"}
+            onClick={onDelete}
+          ></BiTrashAlt>
         </button>
       </td>
     </tr>

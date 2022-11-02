@@ -3,8 +3,8 @@ import {
   deleteStudent,
   getStudents,
   updateStudent,
-} from "../../../database/controller";
-import connect from "../../../database/mongodb";
+} from "../../database/controller";
+import connect from "../../database/mongodb";
 
 export default function handler(req, res) {
   connect().catch(() => res.status(405).json({ error: "Error in connection" }));

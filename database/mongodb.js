@@ -6,6 +6,7 @@ const MONGODB_URI =
 const connect = async () => {
   try {
     const { connection } = await mongoose.connect(MONGODB_URI);
+    console.log("connection: " + connection.readyState);
     if (connection.readyState == 1) {
       console.log("database connected");
     }

@@ -2,8 +2,7 @@ import React from "react";
 import { useReducer } from "react";
 import Success from "./success";
 import { BiPlus } from "react-icons/bi";
-
-const fromReducer = (state, event) => {
+const formReducer = (state, event) => {
   return {
     ...state,
     [event.target.name]: event.target.value,
@@ -11,15 +10,16 @@ const fromReducer = (state, event) => {
 };
 
 export default function AddTaskForm() {
-  const [formData, setFormDate] = useReducer(fromReducer, {});
-  const handleSubmit = (e) => {
+  const [formData, setFormDate] = useReducer(formReducer, {});
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (Object.keys(formData).length == 0) {
       console.log("dont have form data ");
     } else {
-      console.log(formData);
+      await addTask(formData);
     }
   };
+
   if (Object.keys(formData).length > 0) {
     return <Success />;
   }
@@ -30,7 +30,7 @@ export default function AddTaskForm() {
           <input
             onChange={setFormDate}
             type="text"
-            name="firstName"
+            name="surahName"
             placeholder="Student Name"
           ></input>
           {/* change this to a dropdown menu that has all the sura names */}
@@ -39,7 +39,7 @@ export default function AddTaskForm() {
           <input
             onChange={setFormDate}
             type="text"
-            name="ayaRange"
+            name="fromAya"
             placeholder="Aya range"
           ></input>
         </div>
@@ -54,37 +54,14 @@ export default function AddTaskForm() {
             <input
               onChange={setFormDate}
               type="date"
-              name="completeDate"
+              name="completedDate"
               placeholder="Complete date"
             ></input>
           </div>
         </div>
         <div className="inputContainer">
           <label>Type: </label>
-          <div className="formCheck">
-            <div>
-              <input
-                onChange={setFormDate}
-                type="radio"
-                name="status"
-                placeholder="Status"
-                value="Memorization"
-                id="radioDefault1"
-              ></input>
-              <label htmlFor="radioDefault1">Memorization</label>
-            </div>
-            <div>
-              <input
-                onChange={setFormDate}
-                type="radio"
-                name="status"
-                placeholder="Status"
-                value="Revision"
-                id="radioDefault2"
-              ></input>
-              <label htmlFor="radioDefault1">Revision</label>
-            </div>
-          </div>
+          <div className="formCheck"></div>
         </div>
         <div className="submitBtn">
           <button>

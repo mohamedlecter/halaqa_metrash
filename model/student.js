@@ -1,18 +1,6 @@
 import { Schema, models, model } from "mongoose";
 
 const studentSchema = new Schema({
-  // studentId: Number,
-  // firstname: String,
-  // lastName: String,
-  // qatariId: Number,
-  // mobileNumber: Number,
-  // email: String,
-  // password: String,
-  // studentId: {
-  //   type: Number,
-  //   required: false,
-  //   unique: true,
-  // },
   firstName: {
     type: String,
     required: true,
@@ -27,7 +15,6 @@ const studentSchema = new Schema({
   },
   mobileNumber: {
     type: Number,
-    required: true,
   },
   email: {
     type: String,
@@ -43,7 +30,6 @@ const studentSchema = new Schema({
   },
   status: {
     type: String,
-    required: true,
   },
 });
 
