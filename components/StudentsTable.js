@@ -4,6 +4,8 @@ import { BiEdit, BiTrashAlt } from "react-icons/bi";
 import { deleteStudent, getStudents } from "../lib/helper";
 import { useQuery } from "react-query";
 import { useRouter } from "next/router";
+import { updateAction } from "../redux/reducer";
+import { useDispatch } from "react-redux";
 export default function StudentTable() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -66,6 +68,12 @@ function Tr({
   status,
 }) {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const onUpdate = () => {
+    dispatch(updateAction());
+  };
+
   const onDelete = () => {
     console.log(_id);
     deleteStudent(_id);
@@ -101,7 +109,11 @@ function Tr({
       </td>
       <td className="tableBtns">
         <button className="tableBtn">
-          <BiEdit size={25} color={"rgba(34,197,94)"}></BiEdit>
+          <BiEdit
+            size={25}
+            color={"rgba(34,197,94)"}
+            onClick={onUpdate}
+          ></BiEdit>
         </button>
         <button className="tableBtn">
           <BiTrashAlt

@@ -1,3 +1,4 @@
+import Announcments from "../model/Announcments";
 import Students from "../model/student";
 import Tasks from "../model/task";
 
@@ -133,6 +134,77 @@ export async function deleteTask(req, res) {
       const task = await Tasks.findByIdAndDelete(taskId);
       console.log("taskId: " + taskId);
       res.status(200).json({ task });
+    }
+    res.status(404).json({ error: "could not update student" });
+
+    // res.status(200).json({ students });
+  } catch (error) {
+    res.status(404).json({ error: "Error while deleting the student " });
+  }
+}
+
+// get:http://localhost:3000/api/announcments
+
+export async function getAnnouncments(req, res) {
+  try {
+    const announcments = await Announcments.find({});
+    if (!announcments) {
+      return res.status(404).json({ error: "Data not found" });
+    }
+    res.status(200).json({ announcments });
+  } catch (error) {
+    res.status(404).json({ error });
+  }
+}
+
+// post :http://localhost:3000/api/announcments
+
+export async function addAnnouncment(req, res) {
+  try {
+    const formData = req.body;
+    if (!formData) {
+      return res.status(404).json({ error: "No data is found from the form" });
+    } else {
+      console.log(formData);
+      Announcments.create(formData, (err, data) => {
+        // return console.log(err);
+        return res.status(200).json(data);
+      });
+    }
+  } catch (error) {
+    // res.status(200).json({ students });
+    res.status(404).json({ error });
+  }
+}
+
+// put :http://localhost:3000/api/announcments
+
+export async function updateAnnouncment(req, res) {
+  try {
+    const { announcmentId } = req.query;
+    const formData = req.body;
+    if (announcmentId && formData) {
+      await Announcments.findByIdAndUpdate(announcmentId, formData);
+      console.log("announcment Id: " + announcmentId);
+      res.status(200).json(formData);
+    }
+    res.status(404).json({ error: "could not update task" });
+
+    // res.status(200).json({ students });
+  } catch (error) {
+    res.status(404).json({ error });
+  }
+}
+
+// detlet :http://localhost:3000/api/announcments
+
+export async function deleteAnnouncment(req, res) {
+  try {
+    const { announcmentId } = req.query;
+    if (taskId) {
+      const announcment = await Announcments.findByIdAndDelete(announcmentId);
+      console.log("taskId: " + announcmentId);
+      res.status(200).json({ announcment });
     }
     res.status(404).json({ error: "could not update student" });
 

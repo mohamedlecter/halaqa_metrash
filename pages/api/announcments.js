@@ -1,9 +1,9 @@
 import {
-  addTask,
-  deleteTask,
+  addAnnouncment,
+  deleteAnnouncment,
+  getAnnouncments,
+  updateAnnouncment,
   getStudents,
-  getTask,
-  updateTask,
 } from "../../database/controller";
 import connect from "../../database/mongodb";
 
@@ -13,16 +13,16 @@ export default function handler(req, res) {
   const { method } = req;
   switch (method) {
     case "GET":
-      getTask(req, res);
+      getAnnouncments(req, res);
       break;
     case "POST":
-      addTask(req, res);
+      addAnnouncment(req, res);
       break;
     case "PUT":
-      updateTask(req, res);
+      updateAnnouncment(req, res);
       break;
     case "DELETE":
-      deleteTask(req, res);
+      deleteAnnouncment(req, res);
       break;
   }
 }

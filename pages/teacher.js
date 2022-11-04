@@ -3,13 +3,20 @@ import Header from "../components/header";
 import TaskTable from "../components/taskTable";
 import AddTaskForm from "../components/AddTaskForm";
 import UpdateTaskForm from "../components/UpdateTaskForm";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleChangeAction } from "../redux/reducer";
 
-export default function admin() {
-  const [visable, setVisable] = useState(false);
+export default function teacher() {
+  const visable = useSelector((state) => state.app.client.toggleForm);
+  const update = useSelector((state) => state.app.update.toggleForm);
+
+  const dispatch = useDispatch();
+
   const handler = () => {
-    setVisable(!visable);
+    dispatch(toggleChangeAction());
   };
-  const Add = true;
+  console.log("visable: " + visable);
+  console.log("update: " + update);
 
   return (
     <div>
@@ -20,7 +27,8 @@ export default function admin() {
             Add tasks
           </button>
         </div>
-        {visable ? Add ? <AddTaskForm /> : <UpdateTaskForm /> : <></>}
+        {visable ? <AddTaskForm /> : <></>}
+        {update ? <UpdateTaskForm /> : <></>}
         <TaskTable />
       </div>
     </div>

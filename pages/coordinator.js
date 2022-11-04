@@ -6,6 +6,7 @@ import UpdateStudent from "../components/UpdateStudent";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleChangeAction } from "../redux/reducer";
 import { useReducer } from "react";
+import Link from "next/link";
 
 const fromReducer = (state, event) => {
   return {
@@ -14,32 +15,41 @@ const fromReducer = (state, event) => {
   };
 };
 
-export default function admin() {
+export default function coordinator() {
   const [formData, setFormDate] = useReducer(fromReducer, {});
 
   const visable = useSelector((state) => state.app.client.toggleForm);
   const update = useSelector((state) => state.app.update.toggleForm);
-  const formId = useSelector((state) => state.app.update.formId);
 
   const dispatch = useDispatch();
 
   const handler = () => {
     dispatch(toggleChangeAction());
   };
-  console.log(visable);
+  console.log("visable: " + visable);
+  console.log("update: " + update);
 
   return (
     <div>
       <Header />
       <div className="taskContainer">
+        <div className="options">
+          <Link href="/coordinator">
+            <h1>Students</h1>
+          </Link>
+
+          <Link href="/announcement">
+            <h1>Announcments</h1>
+          </Link>
+        </div>
         <div className="addTask">
           <button onClick={handler} type="submit" className="btn btn-primary">
             Add Students
           </button>
         </div>
-        {visable ? AddStudent({ formId, formData, setFormDate }) : <></>}
-        {update ? UpdateStudent({ formId, formData, setFormDate }) : <></>}
-        {/* {visable ? <AddStudent /> : <UpdateStudent />} */}
+        {visable ? <AddStudent /> : <></>}
+        {update ? <UpdateStudent /> : <></>}
+
         <StudentTable />
       </div>
     </div>

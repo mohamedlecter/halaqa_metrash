@@ -8,7 +8,9 @@ import { toggleChangeAction } from "../redux/reducer";
 import Router from "next/router";
 import { useRouter } from "next/router";
 import { updateAction } from "../redux/reducer";
-export default function TaskTable() {
+import { deleteAnnouncment } from "../database/controller";
+
+export default function AnnouncmenetTable() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,7 +18,7 @@ export default function TaskTable() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/tasks`);
+        const response = await fetch(`http://localhost:3000/api/announcments`);
         if (!response.ok) {
           throw new Error(
             `This is an HTTP error: The status is ${response.status}`
@@ -36,38 +38,16 @@ export default function TaskTable() {
   }, []);
 
   return (
-    <div className="tableContainer">
-      <Table className="table">
-        <thead>
-          <tr>
-            <th>Student Name</th>
-            <th>Sura</th>
-            <th>Aya rang</th>
-            <th>due date</th>
-            <th>type</th>
-            <th>status</th>
-            <th>action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data && data.tasks.map((obj, i) => <Tr {...obj} key={i} />)}
-        </tbody>
-      </Table>
+    <div className="AnnouncmentsContainer">
+      <div className="Announcment">
+        {data &&
+          data.announcment.map((obj, i) => <Announcment {...obj} key={i} />)}
+      </div>
     </div>
   );
 }
 
-function Tr({
-  _id,
-  surahName,
-  fromAya,
-  toAya,
-  dueDate,
-  type,
-  completedDate,
-  masteryLevel,
-  comment,
-}) {
+function Announcment({ _id, title, body }) {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -77,35 +57,17 @@ function Tr({
 
   const onDelete = () => {
     console.log(_id);
-    deleteTask(_id);
+    deleteAnnouncment(_id);
     setTimeout(() => {
       router.reload();
     }, 0.5 * 1000);
   };
 
   return (
-    <tr>
-      <td>
-        <span>{surahName || "Unknown"}</span>
-      </td>
-      <td>
-        <span>{fromAya || "Unknown"}</span>
-      </td>
-      <td>
-        <span>{toAya || "Unknown"}</span>
-      </td>
-      <td>
-        <span>{dueDate || "Unknown"}</span>
-      </td>
-      <td>
-        <span>{type || "Unknown"}</span>
-      </td>
-      <td>
-        <button>
-          <span className="status">{status || "Unknown"}</span>
-        </button>
-      </td>
-      <td className="tableBtns">
+    <div>
+      <h1>{title}</h1>
+      <h2>{body}</h2>
+      <div className="tableBtns">
         <button className="tableBtn" onClick={onUpdate}>
           <BiEdit size={25} color={"rgba(34,197,94)"}></BiEdit>
         </button>
@@ -116,7 +78,7 @@ function Tr({
             onClick={onDelete}
           ></BiTrashAlt>
         </button>
-      </td>
-    </tr>
+      </div>
+    </div>
   );
 }
