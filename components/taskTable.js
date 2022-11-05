@@ -40,7 +40,7 @@ export default function TaskTable() {
       <Table className="table">
         <thead>
           <tr>
-            <th>Student Name</th>
+            <th>Sura Name</th>
             <th>Sura</th>
             <th>Aya rang</th>
             <th>due date</th>
@@ -49,9 +49,7 @@ export default function TaskTable() {
             <th>action</th>
           </tr>
         </thead>
-        <tbody>
-          {data && data.tasks.map((obj, i) => <Tr {...obj} key={i} />)}
-        </tbody>
+        <tbody>{data && data.map((obj, i) => <Tr {...obj} key={i} />)}</tbody>
       </Table>
     </div>
   );
@@ -75,9 +73,15 @@ function Tr({
     dispatch(updateAction());
   };
 
-  const onDelete = () => {
+  const onDelete = async () => {
     console.log(_id);
-    deleteTask(_id);
+    try {
+      await fetch(`http://localhost:3000/api/tasks/${_id}`, {
+        method: "DELETE",
+      });
+    } catch (error) {
+      console.log(error);
+    }
     setTimeout(() => {
       router.reload();
     }, 0.5 * 1000);

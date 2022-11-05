@@ -48,9 +48,7 @@ export default function StudentTable() {
             <th>Action</th>
           </tr>
         </thead>
-        <tbody>
-          {data && data.students.map((obj, i) => <Tr {...obj} key={i} />)}
-        </tbody>
+        <tbody>{data && data.map((obj, i) => <Tr {...obj} key={i} />)}</tbody>
       </Table>
     </div>
   );
@@ -74,9 +72,15 @@ function Tr({
     dispatch(updateAction());
   };
 
-  const onDelete = () => {
+  const onDelete = async () => {
     console.log(_id);
-    deleteStudent(_id);
+    try {
+      await fetch(`http://localhost:3000/api/students/${_id}`, {
+        method: "DELETE",
+      });
+    } catch (error) {
+      console.log(error);
+    }
     setTimeout(() => {
       router.reload();
     }, 0.5 * 1000);

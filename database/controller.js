@@ -1,4 +1,4 @@
-import Announcments from "../model/Announcments";
+import Announcments from "../model/announcments";
 import Students from "../model/student";
 import Tasks from "../model/task";
 
@@ -96,8 +96,8 @@ export async function addTask(req, res) {
     } else {
       console.log(formData);
       Tasks.create(formData, (err, data) => {
-        // return console.log(err);
-        return res.status(200).json(data);
+        return console.log(err);
+        // return res.status(200).json(data);
       });
     }
   } catch (error) {
