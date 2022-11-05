@@ -38,8 +38,12 @@ export default function coordinator() {
             <h1>Students</h1>
           </Link>
 
-          <Link href="/announcement">
+          <Link href="/announcements">
             <h1>Announcments</h1>
+          </Link>
+
+          <Link href="/messages">
+            <h1>Messages</h1>
           </Link>
         </div>
         <div className="addTask">
@@ -47,6 +51,7 @@ export default function coordinator() {
             Add Students
           </button>
         </div>
+
         {visable ? <AddStudent /> : <></>}
         {update ? <UpdateStudent /> : <></>}
 

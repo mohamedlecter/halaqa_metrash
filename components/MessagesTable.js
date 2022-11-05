@@ -8,9 +8,8 @@ import { toggleChangeAction } from "../redux/reducer";
 import Router from "next/router";
 import { useRouter } from "next/router";
 import { updateAction } from "../redux/reducer";
-import { deleteAnnouncment } from "../database/controller";
 
-export default function AnnouncmenetTable() {
+export default function MessagesTable() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,7 +17,7 @@ export default function AnnouncmenetTable() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/announcments`);
+        const response = await fetch(`http://localhost:3000/api/messages`);
         if (!response.ok) {
           throw new Error(
             `This is an HTTP error: The status is ${response.status}`
@@ -38,16 +37,22 @@ export default function AnnouncmenetTable() {
   }, []);
 
   return (
-    <div className="AnnouncmentsContainer">
-      <div className="Announcment">
-        {data &&
-          data.announcment.map((obj, i) => <Announcment {...obj} key={i} />)}
-      </div>
+    <div className="tableContainer">
+      <Table className="table">
+        <thead>
+          <tr>
+            <th>Sender</th>
+            <th>To</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>{data && data.map((obj, i) => <Tr {...obj} key={i} />)}</tbody>
+      </Table>
     </div>
   );
 }
 
-function Announcment({ _id, title, body }) {
+function Tr({ _id, sender, to }) {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -55,19 +60,29 @@ function Announcment({ _id, title, body }) {
     dispatch(updateAction());
   };
 
-  const onDelete = () => {
+  const onDelete = async () => {
     console.log(_id);
-    deleteAnnouncment(_id);
+    try {
+      await fetch(`http://localhost:3000/api/messages/${_id}`, {
+        method: "DELETE",
+      });
+    } catch (error) {
+      console.log(error);
+    }
     setTimeout(() => {
       router.reload();
     }, 0.5 * 1000);
   };
 
   return (
-    <div>
-      <h1>{title}</h1>
-      <h2>{body}</h2>
-      <div className="tableBtns">
+    <tr>
+      <td>
+        <span>{sender || "Unknown"}</span>
+      </td>
+      <td>
+        <span>{to || "Unknown"}</span>
+      </td>
+      <td className="tableBtns">
         <button className="tableBtn" onClick={onUpdate}>
           <BiEdit size={25} color={"rgba(34,197,94)"}></BiEdit>
         </button>
@@ -78,7 +93,7 @@ function Announcment({ _id, title, body }) {
             onClick={onDelete}
           ></BiTrashAlt>
         </button>
-      </div>
-    </div>
+      </td>
+    </tr>
   );
 }

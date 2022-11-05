@@ -1,8 +1,7 @@
-// import { announcments } from "../../../model/announcments";
+import Messages from "../../../model/messages";
 import { runMiddleware } from "../../../database/rumMiddleware";
 import Morgan from "morgan";
 import connect from "../../../database/mongodb";
-import Tasks from "../../../model/task";
 
 export default async (req, res) => {
   const {
@@ -16,19 +15,19 @@ export default async (req, res) => {
   switch (method) {
     case "GET":
       try {
-        const announcment = await announcments.findById(id);
-        if (!announcment)
-          return res.status(404).json({ msg: "announcment doesn't exists" });
+        const message = await Messages.findById(id);
+        if (!message)
+          return res.status(404).json({ msg: "message doesn't exists" });
         await runMiddleware(req, res, morgan);
-        return res.status(200).json(announcment);
+        return res.status(200).json(message);
       } catch (err) {
         return res.status(400).json({ msg: err.message });
       }
     case "DELETE":
       try {
-        const deletedAnnouncment = await announcments.findByIdAndDelete(id);
-        if (!deletedAnnouncment)
-          return res.status(404).json({ msg: " Announcment doesn't exists" });
+        const deletedMessage = await Messages.findByIdAndDelete(id);
+        if (!deletedMessage)
+          return res.status(404).json({ msg: "message doesn't exists" });
         await runMiddleware(req, res, morgan);
         return res.status(204).json();
       } catch (err) {
@@ -36,11 +35,11 @@ export default async (req, res) => {
       }
     case "PUT":
       try {
-        const updatedAnnouncment = await Tasks.findByIdAndUpdate(id, body);
+        const updatedMessage = await Messages.findByIdAndUpdate(id, body);
 
-        if (!updatedAnnouncment)
-          return res.status(404).json({ msg: "Announcment doesn't exists" });
-        return res.status(200).json(updatedAnnouncment);
+        if (!updatedMessage)
+          return res.status(404).json({ msg: "message doesn't exists" });
+        return res.status(200).json(updatedMessage);
       } catch (err) {
         return res.status(400).json({ msg: err.message });
       }
