@@ -8,6 +8,7 @@ import { toggleChangeAction } from "../redux/reducer";
 import Router from "next/router";
 import { useRouter } from "next/router";
 import { updateAction } from "../redux/reducer";
+import Moment from "moment";
 export default function TaskTable() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -40,13 +41,14 @@ export default function TaskTable() {
       <Table className="table">
         <thead>
           <tr>
+            <th>Student Name</th>
             <th>Sura Name</th>
-            <th>Sura</th>
-            <th>Aya rang</th>
-            <th>due date</th>
-            <th>type</th>
-            <th>status</th>
-            <th>action</th>
+            <th>From Aya</th>
+            <th>To Aya</th>
+            <th>Due date</th>
+            <th>Completed Date</th>
+            <th>Type</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>{data && data.map((obj, i) => <Tr {...obj} key={i} />)}</tbody>
@@ -57,12 +59,13 @@ export default function TaskTable() {
 
 function Tr({
   _id,
+  studentName,
   surahName,
   fromAya,
   toAya,
   dueDate,
-  type,
   completedDate,
+  type,
   masteryLevel,
   comment,
 }) {
@@ -90,6 +93,9 @@ function Tr({
   return (
     <tr>
       <td>
+        <span>{studentName || "Unknown"}</span>
+      </td>
+      <td>
         <span>{surahName || "Unknown"}</span>
       </td>
       <td>
@@ -99,14 +105,14 @@ function Tr({
         <span>{toAya || "Unknown"}</span>
       </td>
       <td>
-        <span>{dueDate || "Unknown"}</span>
+        <span>{Moment(dueDate).format("DD-MM-YYYY") || "Unknown"}</span>
       </td>
       <td>
-        <span>{type || "Unknown"}</span>
+        <span>{Moment(completedDate).format("DD-MM-YYYY") || "Unknown"}</span>
       </td>
       <td>
         <button>
-          <span className="status">{status || "Unknown"}</span>
+          <span className="status">{type || "Unknown"}</span>
         </button>
       </td>
       <td className="tableBtns">

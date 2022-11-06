@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { BiEdit, BiTrashAlt } from "react-icons/bi";
-import { deleteStudent, getStudents } from "../lib/helper";
-import { useQuery } from "react-query";
 import { useRouter } from "next/router";
 import { updateAction } from "../redux/reducer";
 import { useDispatch } from "react-redux";
@@ -59,9 +57,8 @@ function Tr({
   qatariId,
   firstName,
   lastName,
-  mobile,
+  mobileNumber,
   email,
-  username,
   password,
   status,
 }) {
@@ -97,7 +94,7 @@ function Tr({
         <span>{qatariId || "Unknown"}</span>
       </td>
       <td>
-        <span>{mobile || "Unknown"}</span>
+        <span>{mobileNumber || "Unknown"}</span>
       </td>
       <td>
         <span>{email || "Unknown"}</span>

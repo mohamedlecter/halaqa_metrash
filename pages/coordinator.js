@@ -26,8 +26,6 @@ export default function coordinator() {
   const handler = () => {
     dispatch(toggleChangeAction());
   };
-  console.log("visable: " + visable);
-  console.log("update: " + update);
 
   return (
     <div>
@@ -53,7 +51,6 @@ export default function coordinator() {
         </div>
 
         {visable ? <AddStudent /> : <></>}
-        {update ? <UpdateStudent /> : <></>}
 
         <StudentTable />
       </div>

@@ -1,113 +1,48 @@
-// import React from "react";
-// import { useReducer } from "react";
-// import Success from "./success";
-// import { BiPlus } from "react-icons/bi";
-// const formReducer = (state, event) => {
-//   return {
-//     ...state,
-//     [event.target.name]: event.target.value,
-//   };
-// };
-
-// export default function AddTaskForm() {
-//   const [formData, setFormDate] = useReducer(formReducer, {});
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     if (Object.keys(formData).length == 0) {
-//       console.log("dont have form data ");
-//     } else {
-//       await addTask(formData);
-//     }
-//   };
-
-//   if (Object.keys(formData).length > 0) {
-//     return <Success />;
-//   }
-//   return (
-//     <div className="formContainer">
-//       <form onSubmit={handleSubmit}>
-//         <div className="inputContainer">
-//           <input
-//             onChange={setFormDate}
-//             type="text"
-//             name="surahName"
-//             placeholder="Student Name"
-//           ></input>
-//           {/* change this to a dropdown menu that has all the sura names */}
-//         </div>
-//         <div className="inputContainer">
-//           <input
-//             onChange={setFormDate}
-//             type="text"
-//             name="fromAya"
-//             placeholder="Aya range"
-//           ></input>
-//         </div>
-//         <div className="inputContainer">
-//           <div className="dateInput">
-//             <input
-//               onChange={setFormDate}
-//               type="date"
-//               name="dueDate"
-//               placeholder="Due date"
-//             ></input>
-//             <input
-//               onChange={setFormDate}
-//               type="date"
-//               name="completedDate"
-//               placeholder="Complete date"
-//             ></input>
-//           </div>
-//         </div>
-//         <div className="inputContainer">
-//           <label>Type: </label>
-//           <div className="formCheck"></div>
-//         </div>
-//         <div className="submitBtn">
-//           <button>
-//             Add
-//             <span>
-//               <BiPlus size={20}></BiPlus>
-//             </span>
-//           </button>
-//         </div>
-//       </form>
-//     </div>
-//   );
-// }
-
 import { useState, useEffect } from "react";
 import { Button, Form, Grid, Loader } from "semantic-ui-react";
 import { useRouter } from "next/router";
+import { BiPlus } from "react-icons/bi";
+import Surah from "../data/surah.json";
+import Slider from "react-rangeslider";
 
 const AddTask = () => {
   const [newTask, setnewTask] = useState({
-    suraName: "",
+    studentName: "",
+    surahName: "",
+    fromAya: "",
+    toAya: "",
+    dueDate: "",
+    completedDate: "",
     type: "",
   });
 
-  const { suraName, type } = newTask;
+  const {
+    studentName,
+    surahName,
+    fromAya,
+    toAya,
+    dueDate,
+    completedDate,
+    type,
+  } = newTask;
   const { push, query } = useRouter();
   const [isSubmit, setIsSubmit] = useState(false);
   const [errors, setErrors] = useState({});
+  const [students, setStudents] = useState([]);
+  const router = useRouter();
 
-  const getStudent = async () => {
-    const response = await fetch(`http://localhost:3000/api/tasks/${query.id}`);
-    const data = await response.json();
-    setnewTask({ suraName: data.suraName, type: data.type });
-  };
-
-  useEffect(() => {
-    if (query.id) getStudent();
-  }, [query.id]);
+  const date = new Date();
+  const futureDate = date.getDate() + 1;
+  date.setDate(futureDate);
+  const due = date.toLocaleDateString("en-CA");
+  // const date = new Date();
+  // const due = today.setDate(today.getDate() + 1);
+  // const defaultValue = new Date(date).toISOString().split("T")[0]; // yyyy-mm-dd
 
   const validate = () => {
     let errors = {};
-    if (!suraName) {
-      errors.suraName = "sura is Required";
-    }
-    if (!type) {
-      errors.type = "type is Required";
+    if (!surahName) {
+      errors.surahName = "surahName is Required";
     }
     return errors;
   };
@@ -118,27 +53,10 @@ const AddTask = () => {
 
     if (Object.keys(errors).length) return setErrors(errors);
     setIsSubmit(true);
-    if (query.id) {
-      await updateTask();
-    } else {
-      await createTask();
-    }
-
-    await push("/teacher");
-  };
-
-  const updateTask = async () => {
-    try {
-      await fetch(`http://localhost:3000/api/tasks/${query.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newTask),
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    await createTask();
+    await setTimeout(() => {
+      router.reload();
+    }, 0.5 * 1000);
   };
 
   const createTask = async () => {
@@ -154,65 +72,132 @@ const AddTask = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    const getStudents = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/students`);
+        if (!response.ok) {
+          throw new Error(
+            `This is an HTTP error: The status is ${response.status}`
+          );
+        }
+        let data = await response.json();
+        setStudents(data);
+      } catch (err) {
+        setStudents(null);
+      }
+    };
+    getStudents();
+  }, []);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setnewTask({ ...newTask, [name]: value });
   };
   return (
-    <Grid
-      centered
-      verticalAlign="middle"
-      columns="3"
-      style={{ height: "80vh" }}
-    >
-      <Grid.Row>
-        <Grid.Column textAlign="center">
-          <div>
-            <h1>{query.id ? "Update User" : "Create User"}</h1>
+    <div className="formContainer">
+      <div>
+        {isSubmit ? (
+          <Loader active inline="centered" />
+        ) : (
+          <form onSubmit={handleSubmit}>
             <div>
-              {isSubmit ? (
-                <Loader active inline="centered" />
-              ) : (
-                <Form onSubmit={handleSubmit}>
-                  <Form.Input
-                    error={
-                      errors.suraName
-                        ? { content: "Please enter a suraName " }
-                        : null
-                    }
-                    label="Sura"
-                    placeholder="Enter full name"
-                    name="suraName"
-                    onChange={handleChange}
-                    value={suraName}
-                    autoFocus
-                  />
-
-                  <Form.TextArea
-                    error={
-                      errors.type
-                        ? {
-                            content: "Please enter a type",
-                          }
-                        : null
-                    }
-                    // label="text"
-                    placeholder="type"
-                    name="type"
-                    onChange={handleChange}
-                    value={type}
-                  />
-
-                  <Button type="submit" primary>
-                    {query.id ? "Update" : "Submit"}
-                  </Button>
-                </Form>
-              )}
+              <select name="studentName" onChange={handleChange}>
+                <option>select student</option>
+                {students.map((result) => (
+                  <option>{result.firstName + " " + result.lastName}</option>
+                ))}
+              </select>
             </div>
-          </div>
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
+            <div>
+              <select name="surahName" onChange={handleChange}>
+                <option>selcet surah</option>
+                {Surah.map((result) => (
+                  <option>
+                    {result.id}. {result.englishName} ({result.ayaCount})
+                  </option>
+                ))}
+              </select>
+            </div>
+            <Form.Input
+              type="range"
+              min="1"
+              value={fromAya}
+              className="inputContainer"
+              label={"From Aya " + fromAya}
+              placeholder="From Aya"
+              name="fromAya"
+              onChange={handleChange}
+              autoFocus
+            />
+
+            <Form.Input
+              type="range"
+              min={fromAya}
+              className="inputContainer"
+              label={"To aya " + toAya}
+              placeholder="	To Aya"
+              name="toAya"
+              onChange={handleChange}
+              value={toAya}
+              autoFocus
+            />
+            <Form.Input
+              className="inputContainer"
+              label="	Due date"
+              placeholder="Enter Due date"
+              name="dueDate"
+              type="date"
+              defaultValue={due}
+              onChange={handleChange}
+              autoFocus
+            />
+            <Form.Input
+              className="inputContainer"
+              label="Completed Date"
+              placeholder="Enter 	Completed Date"
+              name="completedDate"
+              type="date"
+              defaultValue={due}
+              onChange={handleChange}
+              autoFocus
+            />
+            <div className="formCheck">
+              <div>
+                <input
+                  type="radio"
+                  name="type"
+                  placeholder="Type"
+                  value="Memorization"
+                  id="radioDefault1"
+                  onChange={handleChange}
+                ></input>
+                <label htmlFor="radioDefault1">Memorization</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="type"
+                  placeholder="Type"
+                  value="Revision"
+                  id="radioDefault2"
+                  onChange={handleChange}
+                ></input>
+                <label htmlFor="radioDefault1">Revision</label>
+              </div>
+            </div>
+            <div className="submitBtn">
+              <button>
+                {"Add"}
+                <span>
+                  <BiPlus size={20}></BiPlus>
+                </span>
+              </button>
+            </div>
+          </form>
+        )}
+      </div>
+    </div>
   );
 };
 
