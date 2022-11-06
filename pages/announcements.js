@@ -26,7 +26,6 @@ export default function announcements() {
           </button>
         </div>
         {visable ? <AddAnnouncement /> : <></>}
-        {/* {update ? <UpdateTaskForm /> : <></>} */}
         <AnnouncmentsTable />
       </div>
     </div>

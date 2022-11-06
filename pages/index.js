@@ -33,7 +33,7 @@ export default function Home() {
             <div className="Auth-form-container">
               <form className="Auth-form">
                 <div className="Auth-form-content">
-                  <Link href="/parentLogin" className="anchorTag">
+                  <Link href="/parent" className="anchorTag">
                     <h3 className="Auth-form-title">Parent</h3>
                   </Link>
                 </div>

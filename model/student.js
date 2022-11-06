@@ -25,6 +25,17 @@ const studentSchema = new Schema({
   status: {
     type: String,
   },
+  students: [
+    {
+      studentId: Number,
+      firstName: String,
+      lastName: String,
+      dob: Date,
+      gender: String,
+      schoolGrade: Number,
+      teacherId: Number,
+    },
+  ],
 });
 
 const Students = models.student || model("student", studentSchema);

@@ -1,6 +1,5 @@
 import React from "react";
 import { useReducer } from "react";
-import Success from "./success";
 import { BiPlus } from "react-icons/bi";
 
 const formReducer = (state, event) => {
@@ -20,9 +19,7 @@ export default function UpdateStudent() {
       console.log(formData);
     }
   };
-  if (Object.keys(formData).length > 0) {
-    return <Success />;
-  }
+
   return (
     <div className="formContainer">
       <form onSubmit={handleSubmit}>
