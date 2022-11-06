@@ -1,28 +1,27 @@
-import { useState } from "react";
+import React from "react";
 
 export default function teacherLogin() {
-  const [logedIn, setIsLogedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
   return (
     <div className="Auth-form-container">
-      <form className="Auth-form">
+      <form className="Auth-form" action="/api/login/teacher" method="post">
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign in as teacher</h3>
           <div className="form-group mt-3">
             <label>Email address</label>
             <input
-              type="email"
               className="form-control mt-1"
-              placeholder="Enter email"
+              type="email"
+              name="email"
+              placeholder="Type your email"
             />
           </div>
           <div className="form-group mt-3">
             <label>Password</label>
             <input
-              type="password"
               className="form-control mt-1"
-              placeholder="Enter password"
+              type="password"
+              name="password"
+              placeholder="Type your password"
             />
           </div>
           <div className="d-grid gap-2 mt-3">
@@ -30,9 +29,6 @@ export default function teacherLogin() {
               Submit
             </button>
           </div>
-          <p className="forgot-password text-right mt-2">
-            Forgot <a href="#">password?</a>
-          </p>
         </div>
       </form>
     </div>

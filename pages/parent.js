@@ -21,7 +21,7 @@ export default function coordinator() {
       <Header />
       <div className="taskContainer">
         <div className="options">
-          <Link href="/coordinator">
+          <Link href="/parent">
             <h1>Children</h1>
           </Link>
           <Link href="/announcements">

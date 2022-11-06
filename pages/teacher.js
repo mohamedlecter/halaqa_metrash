@@ -15,8 +15,6 @@ export default function teacher() {
   const handler = () => {
     dispatch(toggleChangeAction());
   };
-  console.log("visable: " + visable);
-  console.log("update: " + update);
 
   return (
     <div>

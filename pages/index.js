@@ -15,7 +15,7 @@ export default function Home() {
             <div className="Auth-form-container">
               <form className="Auth-form">
                 <div className="Auth-form-content">
-                  <Link href="/coordinator" className="anchorTag">
+                  <Link href="/coordinatorLogin" className="anchorTag">
                     <h3 className="Auth-form-title">Coordinator </h3>
                   </Link>
                 </div>
@@ -24,7 +24,7 @@ export default function Home() {
             <div className="Auth-form-container">
               <form className="Auth-form">
                 <div className="Auth-form-content">
-                  <Link href="/teacher" className="anchorTag">
+                  <Link href="/teacherLogin" className="anchorTag">
                     <h3 className="Auth-form-title">Teacher</h3>
                   </Link>
                 </div>
@@ -33,7 +33,7 @@ export default function Home() {
             <div className="Auth-form-container">
               <form className="Auth-form">
                 <div className="Auth-form-content">
-                  <Link href="/parent" className="anchorTag">
+                  <Link href="/parentLogin" className="anchorTag">
                     <h3 className="Auth-form-title">Parent</h3>
                   </Link>
                 </div>
