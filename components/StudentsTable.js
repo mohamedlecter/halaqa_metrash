@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { BiEdit, BiTrashAlt } from "react-icons/bi";
 import { useRouter } from "next/router";
@@ -64,10 +64,20 @@ function Tr({
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
+  const data = useRef();
 
   const onUpdate = () => {
     dispatch(updateAction());
+    localStorage.setItem("_id", _id);
+    localStorage.setItem("qatariId", qatariId);
+    localStorage.setItem("firstName", firstName);
+    localStorage.setItem("lastName", lastName);
+    localStorage.setItem("mobileNumber", mobileNumber);
+    localStorage.setItem("email", email);
+    localStorage.setItem("password", password);
+    localStorage.setItem("status", status);
   };
+  console.log("firstName: ", localStorage.getItem("firstName"));
 
   const onDelete = async () => {
     console.log(_id);

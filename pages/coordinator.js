@@ -5,9 +5,11 @@ import AddStudent from "../components/AddStudent";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleChangeAction } from "../redux/reducer";
 import Link from "next/link";
+import UpdateStudent from "../components/UpdateStudent";
 
 export default function coordinator() {
   const visable = useSelector((state) => state.app.client.toggleForm);
+  const update = useSelector((state) => state.app.update.toggleForm);
 
   const dispatch = useDispatch();
 
@@ -39,7 +41,7 @@ export default function coordinator() {
         </div>
 
         {visable ? <AddStudent /> : <></>}
-
+        {update ? <UpdateStudent /> : <></>}
         <StudentTable />
       </div>
     </div>

@@ -1,6 +1,9 @@
 import { Schema, models, model } from "mongoose";
 
 const announcmentsSchema = new Schema({
+  to: {
+    type: String,
+  },
   title: {
     type: String,
   },

@@ -42,6 +42,7 @@ export default function MessagesTable() {
           <tr>
             <th>Sender</th>
             <th>To</th>
+            <th>Body</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -51,7 +52,7 @@ export default function MessagesTable() {
   );
 }
 
-function Tr({ _id, sender, to }) {
+function Tr({ _id, sender, to, body }) {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -80,6 +81,9 @@ function Tr({ _id, sender, to }) {
       </td>
       <td>
         <span>{to || "Unknown"}</span>
+      </td>
+      <td>
+        <span>{body || "Unknown"}</span>
       </td>
       <td className="tableBtns">
         <button className="tableBtn" onClick={onUpdate}>

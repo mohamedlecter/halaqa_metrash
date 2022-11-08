@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import Header from "../components/header";
-import StudentTable from "../components/StudentsTable";
-import AddStudent from "../components/AddStudent";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleChangeAction } from "../redux/reducer";
 import Link from "next/link";
 import ChildTable from "../components/Child";
 import AddChild from "../components/AddChild";
 
-export default function coordinator() {
+export default function parent() {
   const visable = useSelector((state) => state.app.client.toggleForm);
   const dispatch = useDispatch();
 
