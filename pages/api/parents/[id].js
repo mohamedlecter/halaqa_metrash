@@ -36,7 +36,6 @@ export default async (req, res) => {
     case "PUT":
       try {
         const updatedStudent = await Students.findByIdAndUpdate(id, body);
-
         if (!updatedStudent)
           return res.status(404).json({ msg: "Student doesn't exists" });
         return res.status(200).json(updatedStudent);

@@ -12,7 +12,7 @@ export default function StudentTable() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/students`);
+        const response = await fetch(`http://localhost:3000/api/parents`);
         if (!response.ok) {
           throw new Error(
             `This is an HTTP error: The status is ${response.status}`
@@ -82,7 +82,7 @@ function Tr({
   const onDelete = async () => {
     console.log(_id);
     try {
-      await fetch(`http://localhost:3000/api/students/${_id}`, {
+      await fetch(`http://localhost:3000/api/parents/${_id}`, {
         method: "DELETE",
       });
     } catch (error) {

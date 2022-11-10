@@ -35,9 +35,6 @@ const AddTask = () => {
   const futureDate = date.getDate() + 1;
   date.setDate(futureDate);
   const due = date.toLocaleDateString("en-CA");
-  // const date = new Date();
-  // const due = today.setDate(today.getDate() + 1);
-  // const defaultValue = new Date(date).toISOString().split("T")[0]; // yyyy-mm-dd
 
   const validate = () => {
     let errors = {};

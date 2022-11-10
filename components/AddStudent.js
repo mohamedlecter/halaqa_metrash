@@ -50,7 +50,7 @@ const AddStudent = () => {
 
   const createStudent = async () => {
     try {
-      await fetch(" http://localhost:3000/api/students", {
+      await fetch(" http://localhost:3000/api/parents", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

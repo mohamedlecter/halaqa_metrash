@@ -12,14 +12,10 @@ export default function ChildTable() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/students`);
-        if (!response.ok) {
-          throw new Error(
-            `This is an HTTP error: The status is ${response.status}`
-          );
-        }
-        let actualData = await response.json();
-        setData(actualData);
+        let user = JSON.parse(localStorage.getItem("loggedUser"));
+        setData(user.students);
+        setData(user.students);
+        console.log(data);
         setError(null);
       } catch (err) {
         setError(err.message);
@@ -43,34 +39,29 @@ export default function ChildTable() {
             <th>Grade</th>
           </tr>
         </thead>
-        <tbody>{data && data.map((obj, i) => Tr(obj))}</tbody>
+        <tbody>{data && data.map((res, i) => Tr(res))}</tbody>
       </Table>
     </div>
   );
 }
-
-function Tr(obj) {
+function Tr(res) {
   return (
-    <>
-      {obj.students.map((res) => (
-        <tr>
-          <td>
-            <span>{res.firstName || "Unknown"}</span>
-          </td>
-          <td>
-            <span>{res.lastName || "Unknown"}</span>
-          </td>
-          <td>
-            <span>{res.dob || "Unknown"}</span>
-          </td>
-          <td>
-            <span>{res.gender || "Unknown"}</span>
-          </td>
-          <td>
-            <span>{res.schoolGrade || "Unknown"}</span>
-          </td>
-        </tr>
-      ))}
-    </>
+    <tr>
+      <td>
+        <span>{res.firstName || "Unknown"}</span>
+      </td>
+      <td>
+        <span>{res.lastName || "Unknown"}</span>
+      </td>
+      <td>
+        <span>{res.dob || "Unknown"}</span>
+      </td>
+      <td>
+        <span>{res.gender || "Unknown"}</span>
+      </td>
+      <td>
+        <span>{res.grade || "Unknown"}</span>
+      </td>
+    </tr>
   );
 }

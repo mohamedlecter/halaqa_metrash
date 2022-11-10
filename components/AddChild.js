@@ -33,15 +33,32 @@ const AddChild = () => {
     if (Object.keys(errors).length) return setErrors(errors);
     setIsSubmit(true);
     await createChild();
-    await setTimeout(() => {
-      router.reload();
-    }, 0.5 * 1000);
+    // await setTimeout(() => {
+    //   router.reload();
+    // }, 0.5 * 1000);
   };
 
+  // const createChild = async () => {
+  //   try {
+  //     await fetch(" http://localhost:3000/api/students", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(newChild),
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   const createChild = async () => {
     try {
-      await fetch(" http://localhost:3000/api/students", {
-        method: "POST",
+      let user = JSON.parse(localStorage.getItem("loggedUser"));
+      user.students.push(newChild);
+      localStorage.setItem("loggedUser", JSON.stringify(user));
+
+      await fetch(`http://localhost:3000/api/parents${user._id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
