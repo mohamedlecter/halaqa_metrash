@@ -3,7 +3,7 @@ import { Button, Form, Grid, Loader } from "semantic-ui-react";
 import { useRouter } from "next/router";
 import { BiPlus } from "react-icons/bi";
 
-const AddMessages = () => {
+const UpdateMesage = () => {
   const [newMssg, setnewMssg] = useState({
     to: "",
     body: "",
@@ -43,13 +43,16 @@ const AddMessages = () => {
 
   const createMssg = async () => {
     try {
-      await fetch("http://localhost:3000/api/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newMssg),
-      });
+      await fetch(
+        `http://localhost:3000/api/messages/${localStorage.getItem("_id")}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newMssg),
+        }
+      );
     } catch (error) {
       console.log(error);
     }
@@ -67,7 +70,11 @@ const AddMessages = () => {
           <form onSubmit={handleSubmit}>
             <div>
               <span>to: </span>
-              <select name="to" onChange={handleChange}>
+              <select
+                name="to"
+                onChange={handleChange}
+                defaultValue={localStorage.getItem("to")}
+              >
                 <option>select student</option>
                 {students.map((result) => (
                   <option>{result.firstName + " " + result.lastName}</option>
@@ -80,7 +87,7 @@ const AddMessages = () => {
               placeholder="Body"
               name="body"
               onChange={handleChange}
-              value={body}
+              defaultValue={localStorage.getItem("body")}
               autoFocus
             />
             <div className="submitBtn">
@@ -98,4 +105,4 @@ const AddMessages = () => {
   );
 };
 
-export default AddMessages;
+export default UpdateMesage;

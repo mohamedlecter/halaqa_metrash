@@ -9,10 +9,10 @@ const AddChild = () => {
     lastName: "",
     dob: "",
     gender: "",
-    grade: "",
+    schoolGrade: "",
   });
 
-  const { firstName, lastName, dob, gender, grade } = newChild;
+  const { firstName, lastName, dob, gender, schoolGrade } = newChild;
   const { push, query } = useRouter();
   const [isSubmit, setIsSubmit] = useState(false);
   const [errors, setErrors] = useState({});
@@ -33,24 +33,12 @@ const AddChild = () => {
     if (Object.keys(errors).length) return setErrors(errors);
     setIsSubmit(true);
     await createChild();
-    // await setTimeout(() => {
-    //   router.reload();
-    // }, 0.5 * 1000);
+    await setTimeout(() => {
+      router.reload();
+    }, 0.5 * 1000);
   };
 
-  // const createChild = async () => {
-  //   try {
-  //     await fetch(" http://localhost:3000/api/students", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(newChild),
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+
   const createChild = async () => {
     try {
       let user = JSON.parse(localStorage.getItem("loggedUser"));
@@ -120,9 +108,9 @@ const AddChild = () => {
               className="inputContainer"
               label="Grade"
               placeholder="Grade"
-              name="grade"
+              name="schoolGrade"
               onChange={handleChange}
-              value={grade}
+              value={schoolGrade}
               autoFocus
             />
             <div className="submitBtn">

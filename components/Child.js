@@ -60,7 +60,7 @@ function Tr(res) {
         <span>{res.gender || "Unknown"}</span>
       </td>
       <td>
-        <span>{res.grade || "Unknown"}</span>
+        <span>{res.schoolGrade || "Unknown"}</span>
       </td>
     </tr>
   );

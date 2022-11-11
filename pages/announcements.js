@@ -1,16 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/header";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleChangeAction } from "../redux/reducer";
 import AnnouncmentsTable from "../components/announcmentsTable";
 import AddAnnouncement from "../components/AddAnnouncement";
 import Link from "next/link";
+import UpdateAnnouncement from "../components/UpdateAnnouncement";
 
 export default function announcements() {
+  const [data, setData] = useState(null);
   const visable = useSelector((state) => state.app.client.toggleForm);
   const update = useSelector((state) => state.app.update.toggleForm);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        let user = JSON.parse(localStorage.getItem("loggedUser"));
+        console.log(user);
+        setData(user);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getData();
+  }, []);
 
   const handler = () => {
     dispatch(toggleChangeAction());
@@ -22,9 +37,14 @@ export default function announcements() {
       <div className="taskContainer">
         <div className="addTask">
           <div className="options">
-            <Link href="/coordinator">
-              <h1>Students</h1>
-            </Link>
+            {/* {data.isCoordinator == true
+            ? 
+                       <Link href="/coordinator">
+                       <h1>Students</h1>
+                     </Link>
+            :
+            </>
+            } */}
 
             <Link href="/announcements">
               <h1>Announcments</h1>
@@ -39,6 +59,7 @@ export default function announcements() {
           </button>
         </div>
         {visable ? <AddAnnouncement /> : <></>}
+        {update ? <UpdateAnnouncement /> : <></>}
         <AnnouncmentsTable />
       </div>
     </div>

@@ -73,7 +73,7 @@ const UpdateTaskForm = (_id) => {
   useEffect(() => {
     const getStudents = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/students`);
+        const response = await fetch(`http://localhost:3000/api/parents`);
         if (!response.ok) {
           throw new Error(
             `This is an HTTP error: The status is ${response.status}`

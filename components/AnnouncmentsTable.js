@@ -40,6 +40,7 @@ export default function AnnouncmentsTable() {
       <Table className="table">
         <thead>
           <tr>
+            <th>To</th>
             <th>Title</th>
             <th>Body</th>
             <th>Action</th>
@@ -51,12 +52,16 @@ export default function AnnouncmentsTable() {
   );
 }
 
-function Tr({ _id, title, body }) {
+function Tr({ _id, to, title, body }) {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const onUpdate = () => {
     dispatch(updateAction());
+    localStorage.setItem("_id", _id);
+    localStorage.setItem("to", to);
+    localStorage.setItem("title", title);
+    localStorage.setItem("body", body);
   };
 
   const onDelete = async () => {
@@ -75,6 +80,9 @@ function Tr({ _id, title, body }) {
 
   return (
     <tr>
+      <td>
+        <span>{to || "Unknown"}</span>
+      </td>
       <td>
         <span>{title || "Unknown"}</span>
       </td>

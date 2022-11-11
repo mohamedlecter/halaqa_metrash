@@ -40,7 +40,6 @@ export default function parentLogin() {
                     method: "POST",
                   }
                 );
-
                 const data = await response.json();
 
                 if (data?.user) {

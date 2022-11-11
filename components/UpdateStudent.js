@@ -24,15 +24,15 @@ const UpdateStudent = () => {
 
     setIsSubmit(true);
     await updateStudent();
-    await setTimeout(() => {
-      router.reload();
-    }, 0.5 * 1000);
+    // await setTimeout(() => {
+    //   router.reload();
+    // }, 0.5 * 1000);
   };
 
   const updateStudent = async () => {
     try {
       await fetch(
-        `http://localhost:3000/api/students/${localStorage.getItem("_id")}`,
+        `http://localhost:3000/api/parents/${localStorage.getItem("_id")}`,
         {
           method: "PUT",
           headers: {
@@ -61,6 +61,7 @@ const UpdateStudent = () => {
               label="Full name"
               placeholder="Enter full name"
               name="firstName"
+              defaultValue={localStorage.getItem("firstName")}
               onChange={handleChange}
               autoFocus
             />
@@ -69,6 +70,7 @@ const UpdateStudent = () => {
               label="Last name"
               placeholder="Last name"
               name="lastName"
+              defaultValue={localStorage.getItem("lastName")}
               onChange={handleChange}
               autoFocus
             />
@@ -77,6 +79,7 @@ const UpdateStudent = () => {
               label="Qatari Id"
               placeholder="Qatari Id"
               name="qatariId"
+              defaultValue={localStorage.getItem("qatariId")}
               onChange={handleChange}
               autoFocus
             />
@@ -85,6 +88,7 @@ const UpdateStudent = () => {
               label="Mobile number"
               placeholder="Mobile number"
               name="mobileNumber"
+              defaultValue={localStorage.getItem("mobileNumber")}
               onChange={handleChange}
               autoFocus
             />
@@ -93,6 +97,7 @@ const UpdateStudent = () => {
               label="Email"
               placeholder="Email"
               name="email"
+              defaultValue={localStorage.getItem("email")}
               onChange={handleChange}
               autoFocus
             />
@@ -101,6 +106,7 @@ const UpdateStudent = () => {
               label="Password"
               placeholder="Password"
               name="password"
+              defaultValue={localStorage.getItem("password")}
               onChange={handleChange}
               autoFocus
             />
@@ -111,6 +117,7 @@ const UpdateStudent = () => {
                   name="status"
                   placeholder="Status"
                   id="radioDefault1"
+                  defaultValue={localStorage.getItem("status")}
                   onChange={handleChange}
                 ></input>
                 <label htmlFor="radioDefault1">Active</label>
@@ -120,7 +127,7 @@ const UpdateStudent = () => {
                   type="radio"
                   name="status"
                   placeholder="Status"
-                  value={localStorage.getItem("status")}
+                  defaultValue={localStorage.getItem("status")}
                   id="radioDefault2"
                   onChange={handleChange}
                 ></input>

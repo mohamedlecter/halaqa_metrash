@@ -40,7 +40,6 @@ export default function MessagesTable() {
       <Table className="table">
         <thead>
           <tr>
-            <th>Sender</th>
             <th>To</th>
             <th>Body</th>
             <th>Action</th>
@@ -52,12 +51,15 @@ export default function MessagesTable() {
   );
 }
 
-function Tr({ _id, sender, to, body }) {
+function Tr({ _id, to, body }) {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const onUpdate = () => {
     dispatch(updateAction());
+    localStorage.setItem("_id", _id);
+    localStorage.setItem("to", to);
+    localStorage.setItem("body", body);
   };
 
   const onDelete = async () => {
@@ -76,9 +78,6 @@ function Tr({ _id, sender, to, body }) {
 
   return (
     <tr>
-      <td>
-        <span>{sender || "Unknown"}</span>
-      </td>
       <td>
         <span>{to || "Unknown"}</span>
       </td>

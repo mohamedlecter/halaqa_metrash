@@ -5,6 +5,7 @@ import { toggleChangeAction } from "../redux/reducer";
 import MessagesTable from "../components/MessagesTable";
 import AddMessages from "../components/Addmessages";
 import Link from "next/link";
+import UpdateMesage from "../components/UpdateMesage";
 
 export default function messages() {
   const visable = useSelector((state) => state.app.client.toggleForm);
@@ -34,6 +35,7 @@ export default function messages() {
           </button>
         </div>
         {visable ? <AddMessages /> : <></>}
+        {update ? <UpdateMesage /> : <></>}
 
         <MessagesTable />
       </div>

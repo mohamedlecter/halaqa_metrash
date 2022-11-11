@@ -77,7 +77,6 @@ function Tr({
     localStorage.setItem("password", password);
     localStorage.setItem("status", status);
   };
-  console.log("firstName: ", localStorage.getItem("firstName"));
 
   const onDelete = async () => {
     console.log(_id);

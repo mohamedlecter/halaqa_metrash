@@ -3,14 +3,16 @@ import { Button, Form, Grid, Loader } from "semantic-ui-react";
 import { useRouter } from "next/router";
 import { BiPlus } from "react-icons/bi";
 
-const AddMessages = () => {
-  const [newMssg, setnewMssg] = useState({
+const UpdateAnnouncement = () => {
+  const [newAnnn, setnewAnn] = useState({
     to: "",
+    title: "",
     body: "",
   });
 
-  const { to, body } = newMssg;
+  const { to, title, body } = newAnnn;
   const [isSubmit, setIsSubmit] = useState(false);
+  const [errors, setErrors] = useState({});
   const router = useRouter();
   const [students, setStudents] = useState([]);
 
@@ -34,29 +36,36 @@ const AddMessages = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setIsSubmit(true);
-    await createMssg();
-    await setTimeout(() => {
-      router.reload();
-    }, 0.5 * 1000);
+    await updateAnnn();
+    // await setTimeout(() => {
+    //   router.reload();
+    // }, 0.5 * 1000);
   };
 
-  const createMssg = async () => {
+  const updateAnnn = async () => {
     try {
-      await fetch("http://localhost:3000/api/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newMssg),
-      });
+      await fetch(
+        `http://localhost:3000/api/announcements/${localStorage.getItem(
+          "_id"
+        )}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newAnnn),
+        }
+      );
     } catch (error) {
       console.log(error);
     }
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setnewMssg({ ...newMssg, [name]: value });
+    setnewAnn({ ...newAnnn, [name]: value });
   };
   return (
     <div className="formContainer">
@@ -67,7 +76,11 @@ const AddMessages = () => {
           <form onSubmit={handleSubmit}>
             <div>
               <span>to: </span>
-              <select name="to" onChange={handleChange}>
+              <select
+                name="to"
+                onChange={handleChange}
+                defaultValue={localStorage.getItem("to")}
+              >
                 <option>select student</option>
                 {students.map((result) => (
                   <option>{result.firstName + " " + result.lastName}</option>
@@ -76,13 +89,23 @@ const AddMessages = () => {
             </div>
             <Form.Input
               className="inputContainer"
-              label="Body"
-              placeholder="Body"
-              name="body"
+              label="Title"
+              placeholder="Enter Title"
+              name="title"
               onChange={handleChange}
-              value={body}
+              defaultValue={localStorage.getItem("title")}
               autoFocus
             />
+            <Form.Input
+              className="inputContainer"
+              label="Body"
+              placeholder="Enter announcmenet body"
+              name="body"
+              onChange={handleChange}
+              defaultValue={localStorage.getItem("body")}
+              autoFocus
+            />
+
             <div className="submitBtn">
               <button>
                 {"Add"}
@@ -98,4 +121,4 @@ const AddMessages = () => {
   );
 };
 
-export default AddMessages;
+export default UpdateAnnouncement;

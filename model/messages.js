@@ -1,9 +1,6 @@
 import { Schema, models, model } from "mongoose";
 
 const messagesSchema = new Schema({
-  sender: {
-    type: String,
-  },
   to: {
     type: String,
   },

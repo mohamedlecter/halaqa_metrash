@@ -5,38 +5,43 @@ import { BiPlus } from "react-icons/bi";
 
 const AddAnnouncement = () => {
   const [newAnnn, setnewAnn] = useState({
+    to: "",
     title: "",
     body: "",
   });
 
-  const { title, body } = newAnnn;
-  const { push, query } = useRouter();
+  const { to, title, body } = newAnnn;
   const [isSubmit, setIsSubmit] = useState(false);
   const [errors, setErrors] = useState({});
   const router = useRouter();
+  const [students, setStudents] = useState([]);
 
-  const validate = () => {
-    let errors = {};
-    if (!title) {
-      errors.title = "title is Required";
-    }
-    if (!body) {
-      errors.body = "body is Required";
-    }
-    return errors;
-  };
+  useEffect(() => {
+    const getStudents = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/parents`);
+        if (!response.ok) {
+          throw new Error(
+            `This is an HTTP error: The status is ${response.status}`
+          );
+        }
+        let data = await response.json();
+        setStudents(data);
+      } catch (err) {
+        setStudents(null);
+      }
+    };
+    getStudents();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let errors = validate();
 
-    if (Object.keys(errors).length) return setErrors(errors);
     setIsSubmit(true);
-
     await createAnnouncement();
-    await setTimeout(() => {
-      router.reload();
-    }, 0.5 * 1000);
+    // await setTimeout(() => {
+    //   router.reload();
+    // }, 0.5 * 1000);
   };
 
   const createAnnouncement = async () => {
@@ -63,6 +68,15 @@ const AddAnnouncement = () => {
           <Loader active inline="centered" />
         ) : (
           <form onSubmit={handleSubmit}>
+            <div>
+              <span>to: </span>
+              <select name="to" onChange={handleChange}>
+                <option>select student</option>
+                {students.map((result) => (
+                  <option>{result.firstName + " " + result.lastName}</option>
+                ))}
+              </select>
+            </div>
             <Form.Input
               className="inputContainer"
               label="Title"
