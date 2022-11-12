@@ -1,6 +1,9 @@
 import React from "react";
+import { useRouter } from "next/router";
 
 export default function teacherLogin() {
+  const router = useRouter();
+
   return (
     <div className="Auth-form-container">
       <form className="Auth-form" method="post">
@@ -48,6 +51,7 @@ export default function teacherLogin() {
                     "loggedUser",
                     JSON.stringify(data?.user)
                   );
+                  router.push("/teacher");
                 } else {
                   alert("No teacher");
                 }

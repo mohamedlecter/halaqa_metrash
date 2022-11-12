@@ -36,7 +36,7 @@ export default async (req, res) => {
       try {
         const updatedTask = await Task.findByIdAndUpdate(id, body);
         if (!updatedTask)
-          return res.status(404).json({ msg: "Student doesn't exists" });
+          return res.status(404).json({ msg: "task doesn't exists" });
         return res.status(200).json(updatedTask);
       } catch (err) {
         return res.status(400).json({ msg: err.message });

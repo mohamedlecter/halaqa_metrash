@@ -39,9 +39,9 @@ const AddAnnouncement = () => {
 
     setIsSubmit(true);
     await createAnnouncement();
-    // await setTimeout(() => {
-    //   router.reload();
-    // }, 0.5 * 1000);
+    await setTimeout(() => {
+      router.reload();
+    }, 0.5 * 1000);
   };
 
   const createAnnouncement = async () => {

@@ -39,9 +39,9 @@ const UpdateAnnouncement = () => {
 
     setIsSubmit(true);
     await updateAnnn();
-    // await setTimeout(() => {
-    //   router.reload();
-    // }, 0.5 * 1000);
+    await setTimeout(() => {
+      router.reload();
+    }, 0.5 * 1000);
   };
 
   const updateAnnn = async () => {

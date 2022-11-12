@@ -51,25 +51,27 @@ const UpdateTaskForm = (_id) => {
     if (Object.keys(errors).length) return setErrors(errors);
     setIsSubmit(true);
     await updateTask();
-    await setTimeout(() => {
-      router.reload();
-    }, 0.5 * 1000);
+    // await setTimeout(() => {
+    //   router.reload();
+    // }, 0.5 * 1000);
   };
 
   const updateTask = async () => {
     try {
-      await fetch(` http://localhost:3000/api/tasks`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newTask),
-      });
+      await fetch(
+        `http://localhost:3000/api/tasks/${localStorage.getItem("_id")}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newTask),
+        }
+      );
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(_id);
   useEffect(() => {
     const getStudents = async () => {
       try {
@@ -99,7 +101,11 @@ const UpdateTaskForm = (_id) => {
         ) : (
           <form onSubmit={handleSubmit}>
             <div>
-              <select name="studentName" onChange={handleChange}>
+              <select
+                name="studentName"
+                onChange={handleChange}
+                defaultValue={localStorage.getItem("studentName")}
+              >
                 <option>select student</option>
                 {students.map((result) => (
                   <option>{result.firstName + " " + result.lastName}</option>
@@ -107,7 +113,11 @@ const UpdateTaskForm = (_id) => {
               </select>
             </div>
             <div>
-              <select name="surahName" onChange={handleChange}>
+              <select
+                name="surahName"
+                onChange={handleChange}
+                defaultValue={localStorage.getItem("surahName")}
+              >
                 <option>selcet surah</option>
                 {Surah.map((result) => (
                   <option>
@@ -119,12 +129,12 @@ const UpdateTaskForm = (_id) => {
             <Form.Input
               type="range"
               min="1"
-              value={fromAya}
               className="inputContainer"
               label={"From Aya " + fromAya}
               placeholder="From Aya"
               name="fromAya"
               onChange={handleChange}
+              defaultValue={localStorage.getItem("fromAya")}
               autoFocus
             />
 
@@ -136,7 +146,7 @@ const UpdateTaskForm = (_id) => {
               placeholder="	To Aya"
               name="toAya"
               onChange={handleChange}
-              value={toAya}
+              defaultValue={localStorage.getItem("toAya")}
               autoFocus
             />
             <Form.Input
@@ -145,7 +155,7 @@ const UpdateTaskForm = (_id) => {
               placeholder="Enter Due date"
               name="dueDate"
               type="date"
-              defaultValue={due}
+              defaultValue={localStorage.getItem("dueDate")}
               onChange={handleChange}
               autoFocus
             />
@@ -155,7 +165,7 @@ const UpdateTaskForm = (_id) => {
               placeholder="Enter 	Completed Date"
               name="completedDate"
               type="date"
-              defaultValue={due}
+              defaultValue={localStorage.getItem("completedDate")}
               onChange={handleChange}
               autoFocus
             />
@@ -165,7 +175,7 @@ const UpdateTaskForm = (_id) => {
                   type="radio"
                   name="type"
                   placeholder="Type"
-                  value="Memorization"
+                  defaultValue={localStorage.getItem("type")}
                   id="radioDefault1"
                   onChange={handleChange}
                 ></input>
@@ -179,6 +189,7 @@ const UpdateTaskForm = (_id) => {
                   value="Revision"
                   id="radioDefault2"
                   onChange={handleChange}
+                  defaultValue={localStorage.getItem("type")}
                 ></input>
                 <label htmlFor="radioDefault1">Revision</label>
               </div>

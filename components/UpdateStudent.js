@@ -24,9 +24,9 @@ const UpdateStudent = () => {
 
     setIsSubmit(true);
     await updateStudent();
-    // await setTimeout(() => {
-    //   router.reload();
-    // }, 0.5 * 1000);
+    await setTimeout(() => {
+      router.reload();
+    }, 0.5 * 1000);
   };
 
   const updateStudent = async () => {

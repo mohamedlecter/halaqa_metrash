@@ -73,6 +73,16 @@ function Tr({
 
   const onUpdate = () => {
     dispatch(updateAction());
+    localStorage.setItem("_id", _id);
+    localStorage.setItem("studentName", studentName);
+    localStorage.setItem("surahName", surahName);
+    localStorage.setItem("fromAya", toAya);
+    localStorage.setItem("dueDate", Moment(dueDate).format("DD-MM-YYYY"));
+    localStorage.setItem(
+      "completedDate",
+      Moment(completedDate).format("DD-MM-YYYY")
+    );
+    localStorage.setItem("type", type);
   };
 
   const onDelete = async () => {

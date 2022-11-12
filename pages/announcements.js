@@ -13,19 +13,23 @@ export default function announcements() {
   const update = useSelector((state) => state.app.update.toggleForm);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        let user = JSON.parse(localStorage.getItem("loggedUser"));
-        console.log(user);
-        setData(user);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getData();
-  }, []);
+  // let isCoordinator;
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     try {
+  //       let user = JSON.parse(localStorage.getItem("loggedUser"));
+  //       console.log(user.isCoordinator);
+  //       if (user.isCoordinator == true) {
+  //         return isCoordinator == true;
+  //       } else {
+  //         return isCoordinator == false;
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   getUser();
+  // }, []);
 
   const handler = () => {
     dispatch(toggleChangeAction());
@@ -37,14 +41,13 @@ export default function announcements() {
       <div className="taskContainer">
         <div className="addTask">
           <div className="options">
-            {/* {data.isCoordinator == true
-            ? 
-                       <Link href="/coordinator">
-                       <h1>Students</h1>
-                     </Link>
-            :
-            </>
-            } */}
+            {/* {data.isCoordinator == true ? (
+              <Link href="/coordinator">
+                <h1>Students</h1>
+              </Link>
+            ) : (
+              <></>
+            )} */}
 
             <Link href="/announcements">
               <h1>Announcments</h1>
